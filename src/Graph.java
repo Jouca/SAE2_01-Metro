@@ -52,4 +52,7 @@ public class Graph {
         }
     }
 
+    public String stationligne(Ligne l) {
+        return l.toString();
+    }
 }

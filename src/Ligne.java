@@ -52,4 +52,10 @@ public class Ligne {
             this.terminus.add(s);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Ligne [line_id=" + line_id + ", type=" + type + ", name=" + name + ", stations=" + stations
+                + ", terminus=" + terminus + "]";
+    }
 }
