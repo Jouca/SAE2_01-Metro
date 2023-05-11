@@ -55,4 +55,31 @@ public class Graph {
     public String stationligne(Ligne l) {
         return l.toString();
     }
+
+    public String correspondace() {
+        HashSet<Ligne> cor = new HashSet<Ligne>();
+
+        for(Station s : stations) {
+            for(Ligne i : s.getLignes()){
+                cor.add(i);
+            }
+        }
+
+        return cor.toString();        
+    }
+
+    public String correspondaceligne(Ligne l) {
+        HashSet<Ligne> cor = new HashSet<Ligne>();
+
+        for(Station s : l.getStations()) {
+            if(stations.contains(s)){
+                for(Ligne i : s.getLignes()){
+                    cor.add(i);
+                }
+            }
+        }
+
+        return cor.toString();        
+    }
+
 }

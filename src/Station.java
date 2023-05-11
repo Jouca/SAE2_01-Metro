@@ -63,4 +63,9 @@ public class Station {
     public Double getLongitude() {
         return this.coordinates.get(1);
     }
+
+    public ArrayList<Ligne> getLignes() {
+        return lignes;
+    }
+    
 }
