@@ -34,9 +34,10 @@ public class Graph {
     private Station minneighbor(HashSet<Station> set) {
         Integer mini = Integer.MAX_VALUE;
         Station sommet = null ;
+
         for(Station s: set) {
             for(Edge i : s.getNeighbor()){
-                if(i.getWeight() < mini){
+                if(i.getWeight() < mini ){
                     mini = i.getWeight();
                     sommet = i.getotherParent(s);
                 }
@@ -46,10 +47,27 @@ public class Graph {
     }
 
     private void update_weight(Station s1, Station s2) {
-        if(s2.getDistance() > (s1.getDistance() + s1.getminiedge(s2).getWeight())){
-            s2.setDistance((s1.getDistance() + s1.getminiedge(s2).getWeight()));
-            anterior.put(s2, s1.getminiedge(s2));
+        Edge miniedge = getminiedge(s1, s2);
+        if(s2.getDistance() > (s1.getDistance() + miniedge.getWeight())){
+            s2.setDistance((s1.getDistance() + miniedge.getWeight()));
+            anterior.put(s2, miniedge);
         }
+    }
+
+    public Edge getminiedge(Station s1, Station s2) {
+        Integer mini = Integer.MAX_VALUE;
+        Edge temp = null;
+        for(Edge i : s1.getNeighbor()) {
+            if (i.containStation(s1) && i.containStation(s2) && i.getLigne().equals(anterior.get(s1).getLigne())){
+                temp = i;
+                break;
+            }
+            else if(i.containStation(s1) && i.containStation(s2) && i.getWeight() < mini) {
+                mini = i.getWeight();
+                temp = i;
+            }
+        }
+        return temp;
     }
 
     public String stationligne(Ligne l) {

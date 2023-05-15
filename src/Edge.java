@@ -23,4 +23,8 @@ public class Edge {
     public Boolean containStation(Station station) {
         return (parents.contains(station));
     }
+
+    public Ligne getLigne() {
+        return ligne;
+    }
 }
