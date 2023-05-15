@@ -32,18 +32,6 @@ public class Station {
         this.distance = distance;
     }
 
-    public Edge getminiedge(Station s) {
-        Integer mini = Integer.MAX_VALUE;
-        Edge temp = null;
-        for(Edge i : neighbor){
-            if(i.containStation(this) && i.containStation(s) && i.getWeight() < mini) {
-                mini = i.getWeight();
-                temp = i;
-            }
-        }
-        return temp;
-    }
-
     public String getID() {
         return station_id;
     }
