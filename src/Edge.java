@@ -2,9 +2,15 @@ import java.util.ArrayList;
 
 public class Edge {
 
-    ArrayList<Station> parents;
+    ArrayList<Station> parents = new ArrayList<>();
     Ligne ligne;
     int weight;
+
+    Edge(Station from_station, Station to_station, int time) {
+        this.parents.add(from_station);
+        this.parents.add(to_station);
+        this.weight = time;
+    }
 
 
     public int getWeight() {

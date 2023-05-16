@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Station {
     String station_id;
     String name;
-    ArrayList<Double> coordinates;
-    ArrayList<Ligne> lignes;
+    List<Double> coordinates;
+    ArrayList<Ligne> lignes = new ArrayList<>();
 
     //Distance and neighbor it's use for Disjkra
     Integer distance = Integer.MAX_VALUE;
-    ArrayList<Edge> neighbor = new ArrayList<Edge>();
+    ArrayList<Edge> neighbor = new ArrayList<>();
 
-    Station(String station_id, String name, ArrayList<Double> coordinates) {
+    Station(String station_id, String name, List<Double> coordinates) {
         this.station_id = station_id;
         this.name = name;
         this.coordinates = coordinates;
@@ -22,6 +23,10 @@ public class Station {
 
     public ArrayList<Edge> getNeighbor() {
         return neighbor;
+    }
+
+    public void setNeighbor(Edge edge) {
+        this.neighbor.add(edge);
     }
 
     public Integer getDistance() {
@@ -40,7 +45,7 @@ public class Station {
         return this.name;
     }
 
-    public ArrayList<Double> getCoordinates() {
+    public List<Double> getCoordinates() {
         return this.coordinates;
     }
 
@@ -55,5 +60,8 @@ public class Station {
     public ArrayList<Ligne> getLignes() {
         return lignes;
     }
-    
+
+    public void setLignes(Ligne ligne) {
+        this.lignes.add(ligne);
+    }
 }

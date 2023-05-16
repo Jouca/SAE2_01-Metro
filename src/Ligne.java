@@ -7,12 +7,10 @@ public class Ligne {
     ArrayList<Station> stations;
     ArrayList<Station> terminus;
 
-    Ligne(String line_id, String type, String name, ArrayList<Station> stations, ArrayList<Station> terminus) {
+    Ligne(String line_id, String type, String name) {
         this.line_id = line_id;
         this.type = type;
         this.name = name;
-        this.stations = stations;
-        this.terminus = terminus;
     }
 
     public Boolean contains(Station s) {

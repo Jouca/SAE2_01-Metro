@@ -3,8 +3,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Graph {
-    HashSet<Station> stations;
-    HashMap<Station, Edge> anterior;
+    HashSet<Station> stations = new HashSet<>();
+    HashMap<Station, Edge> anterior = new HashMap<>();;
 
     public void addstation(Station station) {
         stations.add(station);
@@ -19,8 +19,6 @@ public class Graph {
                 update_weight(s1, e.getotherParent(s1));
             }
         }
-
-
 
         ArrayList<Edge> a = new ArrayList<>();
         while(end != begin) {
@@ -74,7 +72,7 @@ public class Graph {
         return l.toString();
     }
 
-    public String correspondace() {
+    public String correspondance() {
         HashSet<Ligne> cor = new HashSet<Ligne>();
 
         for(Station s : stations) {
@@ -86,7 +84,7 @@ public class Graph {
         return cor.toString();        
     }
 
-    public String correspondaceligne(Ligne l) {
+    public String correspondanceligne(Ligne l) {
         HashSet<Ligne> cor = new HashSet<Ligne>();
 
         for(Station s : l.getStations()) {
