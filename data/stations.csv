@@ -9,7 +9,11 @@ id;ligne;terminus;nom;idfm_station_id
 7;11;0;Arts_et_M�tiers;42230
 8;3;0;Arts_et_M�tiers;42230
 9;12;0;Assembl�e_Nationale;45704
+<<<<<<< Updated upstream
 10;7;0;Aubervilliers-Pantin,_Quatre_Chemins;46492
+=======
+10;7;0;Aubervilliers-Pantin;46492
+>>>>>>> Stashed changes
 11;10;0;Avenue_�mile_Zola;42265
 12;2;0;Avron;42271
 13;2;0;Barb�s_Rochechouart;42280

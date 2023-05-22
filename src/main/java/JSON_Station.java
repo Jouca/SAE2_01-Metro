@@ -1,5 +1,3 @@
-package main.java;
-
 import com.google.gson.JsonObject;
 
 import java.util.List;

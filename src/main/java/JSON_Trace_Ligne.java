@@ -1,5 +1,3 @@
-package main.java;
-
 import java.util.List;
 
 class JSON_Trace_Ligne {

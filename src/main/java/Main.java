@@ -1,5 +1,3 @@
-package main.java;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -11,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -22,9 +21,6 @@ public class Main {
         Gson gson_station = new Gson();
         JsonReader reader_station = new JsonReader(new FileReader("data/emplacement-des-gares-idf-data-generalisee.json"));
         final List<JSON_Station> data_stations_const = gson_station.fromJson(reader_station, JSON_STATION_TYPE);
-        /*for (JSON_Station station : data_stations_const) {
-            System.out.println(station.nom_long);
-        }*/
 
         // Test Ligne JSON
 
@@ -33,9 +29,6 @@ public class Main {
         Gson gson_ligne = new Gson();
         JsonReader reader_ligne = new JsonReader(new FileReader("data/referenciel-des-lignes.json"));
         final List<JSON_Ligne> data_ligne_const = gson_ligne.fromJson(reader_ligne, JSON_LIGNE_TYPE);
-        /*for (JSON_Ligne ligne : data_ligne_const) {
-            System.out.println(ligne.name_line);
-        }*/
 
         // Test Trace Ligne JSON
 
@@ -53,7 +46,11 @@ public class Main {
         // Test Stations CSV
 
         List<List<String>> station_csv = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new FileReader("data/stations.csv"));) {
+        try (CSVReader csvReader = new CSVReaderBuilder(new FileReader("data/stations.csv"))
+                .withCSVParser(new CSVParserBuilder()
+                        .withSeparator(';')
+                        .build()
+                ).build()) {
             String[] values = null;
             while ((values = csvReader.readNext()) != null) {
                 station_csv.add(Arrays.asList(values));
@@ -63,37 +60,58 @@ public class Main {
         // Test Relations CSV
 
         List<List<String>> relation_csv = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new FileReader("data/relations.csv"));) {
+        try (CSVReader csvReader = new CSVReaderBuilder(new FileReader("data/relations.csv"))
+                .withCSVParser(new CSVParserBuilder()
+                        .withSeparator(';')
+                        .build()
+                ).build()) {
             String[] values = null;
             while ((values = csvReader.readNext()) != null) {
                 relation_csv.add(Arrays.asList(values));
             }
         }
 
-        System.out.println(station_csv);
-        System.out.println(relation_csv);
 
-
-        ArrayList<Station> stations = new ArrayList<>();
-        ArrayList<Ligne> lignes = new ArrayList<>();
+        HashMap<String, Station> stations = new HashMap<>();
+        HashMap<String, Ligne> lignes = new HashMap<>();
         ArrayList<Edge> edges = new ArrayList<>();
         Graph graphe = new Graph();
 
-        for (JSON_Station station : data_stations_const) {
-            Station formatted_station;
-            if (station.train == 1 || station.rer == 1) {
-                formatted_station = new Station("IDFM:monomodalStopPlace:"+(int)station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
-            } else {
-                formatted_station = new Station("IDFM:"+(int)station.id_ref_lda, station.nom_long, station.geo_shape.geometry.coordinates);
+        int count = 1;
+
+        for (int i = 1; i < station_csv.size(); i++) {
+            for (JSON_Station station : data_stations_const) {
+                Station formatted_station = null;
+                String station_id = "";
+
+                if (Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_lda || Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_zdl) {
+                    if (!stations.containsKey("IDFM:monomodalStopPlace:" + (int) station.id_ref_zdl) && !stations.containsKey("IDFM:" + (int) station.id_ref_lda)) {
+                        if (station.train == 1 || station.rer == 1) {
+                            formatted_station = new Station("IDFM:monomodalStopPlace:" + (int) station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
+                            station_id = "IDFM:monomodalStopPlace:" + (int) station.id_ref_zdl;
+                        } else {
+                            formatted_station = new Station("IDFM:" + (int) station.id_ref_lda, station.nom_long, station.geo_shape.geometry.coordinates);
+                            station_id = "IDFM:" + (int) station.id_ref_lda;
+                        }
+                    }
+
+                    // Ajout des neighbours
+                    for (int j = 1; j < relation_csv.size(); j++) {
+                        if (relation_csv.get(j).get(0).equals(station_csv.get(i).get(0))) {
+                            for (int q = 1; q < station_csv.size(); q++) {
+                                if (relation_csv.get(j).get(1).equals(station_csv.get(q).get(0))) {
+                                    System.out.println(relation_csv.get(j) + " " + count);
+                                    count += 1;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stations.put(station_id, formatted_station);
             }
         }
 
-        Station test = stations.get(19);
-        System.out.println(test.name);
-        System.out.println(test.lignes);
-
-        for (Edge edge_test : test.neighbor) {
-            System.out.println(edge_test.parents.get(0).station_id + " " + edge_test.parents.get(1).station_id);
-        }
+        //System.out.println(stations.get("IDFM:71359").getLignes());
     }
 }
