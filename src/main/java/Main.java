@@ -1,15 +1,20 @@
+package main.java;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.opencsv.*;
+import com.opencsv.exceptions.CsvValidationException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException, CsvValidationException {
         // Test Station JSON
 
         final Type JSON_STATION_TYPE = new TypeToken<List<JSON_Station>>() {
@@ -44,6 +49,29 @@ public class Main {
                 System.out.println(geometry);
             }
         }*/
+
+        // Test Stations CSV
+
+        List<List<String>> station_csv = new ArrayList<>();
+        try (CSVReader csvReader = new CSVReader(new FileReader("data/stations.csv"));) {
+            String[] values = null;
+            while ((values = csvReader.readNext()) != null) {
+                station_csv.add(Arrays.asList(values));
+            }
+        }
+
+        // Test Relations CSV
+
+        List<List<String>> relation_csv = new ArrayList<>();
+        try (CSVReader csvReader = new CSVReader(new FileReader("data/relations.csv"));) {
+            String[] values = null;
+            while ((values = csvReader.readNext()) != null) {
+                relation_csv.add(Arrays.asList(values));
+            }
+        }
+
+        System.out.println(station_csv);
+        System.out.println(relation_csv);
 
 
         ArrayList<Station> stations = new ArrayList<>();
