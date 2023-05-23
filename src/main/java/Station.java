@@ -64,4 +64,9 @@ public class Station {
     public void setLignes(Ligne ligne) {
         this.lignes.add(ligne);
     }
+
+    @Override
+    public String toString() {
+        return "Station_id=" + this.station_id + ", Name=" + this.name + ", Coordinates" + this.coordinates + ", Lines=" + this.lignes;
+    }
 }

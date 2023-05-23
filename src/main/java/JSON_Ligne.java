@@ -40,6 +40,5 @@ class Picto {
     String mimetype;
     String id;
     String last_synchronized;
-    List color_summary;
     int height;
 }

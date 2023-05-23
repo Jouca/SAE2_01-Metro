@@ -13,6 +13,17 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Main {
+    private static Station convertLineType(JSON_Station station) {
+        Station formatted_station = null;
+
+        if (station.train == 1 || station.rer == 1) {
+            formatted_station = new Station("IDFM:monomodalStopPlace:" + (int) station.id_ref_lda, station.nom_long, station.geo_shape.geometry.coordinates);
+        } else {
+            formatted_station = new Station("IDFM:" + (int) station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
+        }
+
+        return formatted_station;
+    }
     public static void main(String[] args) throws IOException, CsvValidationException {
         // Test Station JSON
 
@@ -57,6 +68,11 @@ public class Main {
             }
         }
 
+        HashMap<String, List> hashMap_station_csv = new HashMap<>();
+        for (List list : station_csv) {
+            hashMap_station_csv.put((String) list.get(0), list);
+        }
+
         // Test Relations CSV
 
         List<List<String>> relation_csv = new ArrayList<>();
@@ -71,47 +87,65 @@ public class Main {
             }
         }
 
+        List<String> transport_allow = new ArrayList<>();
+        transport_allow.add("METRO");
+
 
         HashMap<String, Station> stations = new HashMap<>();
         HashMap<String, Ligne> lignes = new HashMap<>();
         ArrayList<Edge> edges = new ArrayList<>();
         Graph graphe = new Graph();
 
-        int count = 1;
-
         for (int i = 1; i < station_csv.size(); i++) {
             for (JSON_Station station : data_stations_const) {
                 Station formatted_station = null;
                 String station_id = "";
 
-                if (Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_lda || Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_zdl) {
-                    if (!stations.containsKey("IDFM:monomodalStopPlace:" + (int) station.id_ref_zdl) && !stations.containsKey("IDFM:" + (int) station.id_ref_lda)) {
-                        if (station.train == 1 || station.rer == 1) {
-                            formatted_station = new Station("IDFM:monomodalStopPlace:" + (int) station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
-                            station_id = "IDFM:monomodalStopPlace:" + (int) station.id_ref_zdl;
-                        } else {
-                            formatted_station = new Station("IDFM:" + (int) station.id_ref_lda, station.nom_long, station.geo_shape.geometry.coordinates);
-                            station_id = "IDFM:" + (int) station.id_ref_lda;
-                        }
-                    }
+                if (Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_zdl) {
+                    formatted_station = convertLineType(station);
+                    station_id = formatted_station.station_id;
 
                     // Ajout des neighbours
                     for (int j = 1; j < relation_csv.size(); j++) {
+                        // Regarde si l'ID de la ligne correspond à celui dans relation
                         if (relation_csv.get(j).get(0).equals(station_csv.get(i).get(0))) {
-                            for (int q = 1; q < station_csv.size(); q++) {
-                                if (relation_csv.get(j).get(1).equals(station_csv.get(q).get(0))) {
-                                    System.out.println(relation_csv.get(j) + " " + count);
-                                    count += 1;
+                            String id_other = relation_csv.get(j).get(1);
+
+                            // Regarde si l'ID de la ligne a une relation avec une autre ligne
+                            for (JSON_Station station_2 : data_stations_const) {
+                                if (Double.parseDouble((String) hashMap_station_csv.get(id_other).get(4)) == station_2.id_ref_zdl) {
+                                    for (JSON_Ligne ligne : data_ligne_const) {
+                                        if (ligne.name_line.equals(hashMap_station_csv.get(id_other).get(1))) {
+                                            Edge new_edge = new Edge(
+                                                    formatted_station,
+                                                    convertLineType(station_2),
+                                                    Integer.parseInt(relation_csv.get(j).get(2))
+                                            );
+                                            new_edge.setLigne(
+                                                    new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+                                            );
+                                            formatted_station.setNeighbor(new_edge);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                stations.put(station_id, formatted_station);
+                    if (!stations.containsKey("IDFM:" + (int) station.id_ref_zdl)) {
+                        stations.put(station_id, formatted_station);
+                    } else {
+                        for (Edge edge : stations.get(station_id).getNeighbor()) {
+                            formatted_station.setNeighbor(edge);
+                        }
+                        stations.replace(station_id, formatted_station);
+                    }
+                }
             }
         }
 
-        //System.out.println(stations.get("IDFM:71359").getLignes());
+        for (Edge edge : stations.get("IDFM:42587").getNeighbor()) {
+            System.out.println(edge);
+        }
     }
 }

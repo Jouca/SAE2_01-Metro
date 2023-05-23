@@ -33,4 +33,13 @@ public class Edge {
     public Ligne getLigne() {
         return ligne;
     }
+
+    public void setLigne(Ligne ligne) {
+        this.ligne = ligne;
+    }
+
+    @Override
+    public String toString() {
+        return "Parents=" + this.parents + ", Lines=" + this.ligne + ", Weight=" + this.weight;
+    }
 }
