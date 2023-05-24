@@ -152,41 +152,6 @@ public class Main {
                                         }
                                     }
                                 }
-                            } else if (relation_csv.get(j).get(1).equals(station_csv.get(i).get(0))) {
-                                String id_other = relation_csv.get(j).get(0);
-
-                                // Regarde si l'ID de la ligne a une relation avec une autre ligne
-                                for (JSON_Station station_2 : data_stations_const) {
-                                    if (transport_allow.contains(station_2.mode)) {
-                                        if (Double.parseDouble((String) hashMap_station_csv.get(id_other).get(4)) == station_2.id_ref_zdl) {
-                                            Station other_formatted_station = convertLineType(station_2);
-
-                                            for (JSON_Ligne ligne : data_ligne_const) {
-                                                if (station_2.idrefligc.contains(ligne.id_line)) {
-                                                    other_formatted_station.setLignes(
-                                                            new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
-                                                    );
-                                                }
-                                            }
-
-                                            Edge new_edge = new Edge(
-                                                    formatted_station,
-                                                    other_formatted_station,
-                                                    Integer.parseInt(relation_csv.get(j).get(2))
-                                            );
-
-                                            for (JSON_Ligne ligne : data_ligne_const) {
-                                                if (ligne.name_line.equals(hashMap_station_csv.get(id_other).get(1))) {
-                                                    new_edge.setLigne(
-                                                            new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
-                                                    );
-                                                }
-                                            }
-
-                                            formatted_station.setNeighbor(new_edge);
-                                        }
-                                    }
-                                }
                             }
                         }
 
@@ -210,8 +175,8 @@ public class Main {
 
         System.out.println(graphe.Dijkstra(stations.get("IDFM:42587"), stations.get("IDFM:44371")));
 
-        /*for (Edge edge : stations.get("IDFM:42587").getNeighbor()) {
-            System.out.println(edge);
+        /*for (Edge edge : stations.get("IDFM:44371").getNeighbor()) {
+            System.out.println(edge.parents);
         }*/
     }
 }

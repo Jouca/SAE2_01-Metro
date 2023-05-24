@@ -14,13 +14,16 @@ public class Graph {
         begin.setDistance(0);
         ArrayList<Station> nodes = new ArrayList<>(stations);
 
+        ////////////////////////////////////////
+        // BOUCLE INFINIE
         while (!nodes.isEmpty()) {
             Station s1 = minneighbor(nodes);
-            for(Edge e : s1.getNeighbor()){
-                update_weight(s1, e.getotherParent(s1));
+            nodes.remove(s1);
+            for(Edge e : s1.getNeighbor()) {
+                update_weight(e.parents.get(0), e.parents.get(1));
             }
-            nodes.remove(0);
         }
+        ////////////////////////////////////////
 
         System.out.println("etape 2");
 
@@ -41,9 +44,9 @@ public class Graph {
         Integer mini = Integer.MAX_VALUE;
         Station sommet = null;
 
-        for(Station s: set) {
-            for(Edge i : s.getNeighbor()){
-                if(i.getWeight() < mini ){
+        for (Station s : set) {
+            for (Edge i : s.getNeighbor()) {
+                if (i.getWeight() < mini) {
                     mini = i.getWeight();
                     sommet = i.getotherParent(s);
                 }
@@ -73,7 +76,7 @@ public class Graph {
                 mini = i.getWeight();
                 temp = i;
             }*/
-            if (i.containStation(s1) && i.containStation(s2) && i.getWeight() < mini) {
+            if (i.containStation(s1) && i.containStation(s2)) {
                 mini = i.getWeight();
                 temp = i;
             }
