@@ -98,7 +98,7 @@ public class Main {
 
         for (int i = 1; i < station_csv.size(); i++) {
             for (JSON_Station station : data_stations_const) {
-                if (transport_allow.contains(station.mode)) {
+                if (station.metro == 1) {
                     Station formatted_station = null;
                     String station_id = "";
 
@@ -122,7 +122,7 @@ public class Main {
 
                                 // Regarde si l'ID de la ligne a une relation avec une autre ligne
                                 for (JSON_Station station_2 : data_stations_const) {
-                                    if (transport_allow.contains(station_2.mode)) {
+                                    if (station.metro == 1) {
                                         if (Double.parseDouble((String) hashMap_station_csv.get(id_other).get(4)) == station_2.id_ref_zdl) {
                                             Station other_formatted_station = convertLineType(station_2);
 
