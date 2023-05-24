@@ -98,54 +98,120 @@ public class Main {
 
         for (int i = 1; i < station_csv.size(); i++) {
             for (JSON_Station station : data_stations_const) {
-                Station formatted_station = null;
-                String station_id = "";
+                if (transport_allow.contains(station.mode)) {
+                    Station formatted_station = null;
+                    String station_id = "";
 
-                if (Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_zdl) {
-                    formatted_station = convertLineType(station);
-                    station_id = formatted_station.station_id;
+                    if (Double.parseDouble(station_csv.get(i).get(4)) == station.id_ref_zdl) {
+                        formatted_station = convertLineType(station);
+                        station_id = formatted_station.station_id;
 
-                    // Ajout des neighbours
-                    for (int j = 1; j < relation_csv.size(); j++) {
-                        // Regarde si l'ID de la ligne correspond à celui dans relation
-                        if (relation_csv.get(j).get(0).equals(station_csv.get(i).get(0))) {
-                            String id_other = relation_csv.get(j).get(1);
+                        for (JSON_Ligne ligne : data_ligne_const) {
+                            if (station.idrefligc.contains(ligne.id_line)) {
+                                formatted_station.setLignes(
+                                        new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+                                );
+                            }
+                        }
 
-                            // Regarde si l'ID de la ligne a une relation avec une autre ligne
-                            for (JSON_Station station_2 : data_stations_const) {
-                                if (Double.parseDouble((String) hashMap_station_csv.get(id_other).get(4)) == station_2.id_ref_zdl) {
-                                    for (JSON_Ligne ligne : data_ligne_const) {
-                                        if (ligne.name_line.equals(hashMap_station_csv.get(id_other).get(1))) {
+                        // Ajout des neighbours
+                        for (int j = 1; j < relation_csv.size(); j++) {
+                            // Regarde si l'ID de la ligne correspond à celui dans relation
+                            if (relation_csv.get(j).get(0).equals(station_csv.get(i).get(0))) {
+                                String id_other = relation_csv.get(j).get(1);
+
+                                // Regarde si l'ID de la ligne a une relation avec une autre ligne
+                                for (JSON_Station station_2 : data_stations_const) {
+                                    if (transport_allow.contains(station_2.mode)) {
+                                        if (Double.parseDouble((String) hashMap_station_csv.get(id_other).get(4)) == station_2.id_ref_zdl) {
+                                            Station other_formatted_station = convertLineType(station_2);
+
+                                            for (JSON_Ligne ligne : data_ligne_const) {
+                                                if (station_2.idrefligc.contains(ligne.id_line)) {
+                                                    other_formatted_station.setLignes(
+                                                            new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+                                                    );
+                                                }
+                                            }
+
                                             Edge new_edge = new Edge(
                                                     formatted_station,
-                                                    convertLineType(station_2),
+                                                    other_formatted_station,
                                                     Integer.parseInt(relation_csv.get(j).get(2))
                                             );
-                                            new_edge.setLigne(
-                                                    new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+
+                                            for (JSON_Ligne ligne : data_ligne_const) {
+                                                if (ligne.name_line.equals(hashMap_station_csv.get(id_other).get(1))) {
+                                                    new_edge.setLigne(
+                                                            new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+                                                    );
+                                                }
+                                            }
+
+                                            formatted_station.setNeighbor(new_edge);
+                                        }
+                                    }
+                                }
+                            } else if (relation_csv.get(j).get(1).equals(station_csv.get(i).get(0))) {
+                                String id_other = relation_csv.get(j).get(0);
+
+                                // Regarde si l'ID de la ligne a une relation avec une autre ligne
+                                for (JSON_Station station_2 : data_stations_const) {
+                                    if (transport_allow.contains(station_2.mode)) {
+                                        if (Double.parseDouble((String) hashMap_station_csv.get(id_other).get(4)) == station_2.id_ref_zdl) {
+                                            Station other_formatted_station = convertLineType(station_2);
+
+                                            for (JSON_Ligne ligne : data_ligne_const) {
+                                                if (station_2.idrefligc.contains(ligne.id_line)) {
+                                                    other_formatted_station.setLignes(
+                                                            new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+                                                    );
+                                                }
+                                            }
+
+                                            Edge new_edge = new Edge(
+                                                    formatted_station,
+                                                    other_formatted_station,
+                                                    Integer.parseInt(relation_csv.get(j).get(2))
                                             );
+
+                                            for (JSON_Ligne ligne : data_ligne_const) {
+                                                if (ligne.name_line.equals(hashMap_station_csv.get(id_other).get(1))) {
+                                                    new_edge.setLigne(
+                                                            new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
+                                                    );
+                                                }
+                                            }
+
                                             formatted_station.setNeighbor(new_edge);
                                         }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    if (!stations.containsKey("IDFM:" + (int) station.id_ref_zdl)) {
-                        stations.put(station_id, formatted_station);
-                    } else {
-                        for (Edge edge : stations.get(station_id).getNeighbor()) {
-                            formatted_station.setNeighbor(edge);
+                        if (!stations.containsKey("IDFM:" + (int) station.id_ref_zdl)) {
+                            stations.put(station_id, formatted_station);
+                        } else {
+                            for (Edge edge : stations.get(station_id).getNeighbor()) {
+                                formatted_station.setNeighbor(edge);
+                            }
+                            stations.replace(station_id, formatted_station);
                         }
-                        stations.replace(station_id, formatted_station);
                     }
                 }
             }
         }
 
-        for (Edge edge : stations.get("IDFM:42587").getNeighbor()) {
-            System.out.println(edge);
+        for (Station station : stations.values()) {
+            graphe.addstation(station);
         }
+
+
+        System.out.println(graphe.Dijkstra(stations.get("IDFM:42587"), stations.get("IDFM:44371")));
+
+        /*for (Edge edge : stations.get("IDFM:42587").getNeighbor()) {
+            System.out.println(edge);
+        }*/
     }
 }

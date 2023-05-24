@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,12 +13,20 @@ public class Graph {
 
     public ArrayList<Edge> Dijkstra(Station begin, Station end){
         begin.setDistance(0);
-        HashSet<Station> nodes = new HashSet<>(stations);
-        while(!nodes.isEmpty()) {
+        ArrayList<Station> nodes = new ArrayList<>(stations);
+
+        while (!nodes.isEmpty()) {
             Station s1 = minneighbor(nodes);
             for(Edge e : s1.getNeighbor()){
                 update_weight(s1, e.getotherParent(s1));
             }
+            nodes.remove(0);
+        }
+
+        System.out.println("etape 2");
+
+        for (Edge i : anterior.values()) {
+            System.out.println(i);
         }
 
         ArrayList<Edge> a = new ArrayList<>();
@@ -29,9 +38,9 @@ public class Graph {
         return a;
     }
 
-    private Station minneighbor(HashSet<Station> set) {
+    private Station minneighbor(ArrayList<Station> set) {
         Integer mini = Integer.MAX_VALUE;
-        Station sommet = null ;
+        Station sommet = null;
 
         for(Station s: set) {
             for(Edge i : s.getNeighbor()){
@@ -56,11 +65,16 @@ public class Graph {
         Integer mini = Integer.MAX_VALUE;
         Edge temp = null;
         for(Edge i : s1.getNeighbor()) {
+            /*
             if (i.containStation(s1) && i.containStation(s2) && i.getLigne().equals(anterior.get(s1).getLigne())){
                 temp = i;
                 break;
             }
             else if(i.containStation(s1) && i.containStation(s2) && i.getWeight() < mini) {
+                mini = i.getWeight();
+                temp = i;
+            }*/
+            if (i.containStation(s1) && i.containStation(s2) && i.getWeight() < mini) {
                 mini = i.getWeight();
                 temp = i;
             }
