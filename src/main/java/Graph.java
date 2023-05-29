@@ -125,7 +125,7 @@ public class Graph {
         } else {
             formatted_station = new Station(station_id,"IDFM:" + (int) station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
         }*/
-        Station formatted_station = new Station(station_id,"IDFM:" + (int) station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
+        Station formatted_station = new Station(station_id,"IDFM:" + (int) station.id_ref_zdl, station.nom_zdl, station.geo_shape.geometry.coordinates);
 
         return formatted_station;
     }
