@@ -7394,7 +7394,7 @@
             },
             "properties": {}
         },
-        "codeunique": 442.0,
+        "codeunique": 5838757.0,
         "nom_long": "Porte de Clichy",
         "label": "Porte de Clichy",
         "id_ref_lda": 71545.0,
@@ -7408,7 +7408,7 @@
         "fer": 1.0,
         "train": 0.0,
         "rer": 1.0,
-        "metro": 0.0,
+        "metro": 1.0,
         "tramway": 1.0,
         "navette": 0.0,
         "val": 0.0,
@@ -24300,6 +24300,53 @@
     },
     {
         "geo_point_2d": {
+            "lon": 2.293529966337255,
+            "lat": 48.88600615058625
+        },
+        "geo_shape": {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    2.2741546297365587,
+                    48.85804605446367
+                ],
+                "type": "Point"
+            },
+            "properties": {}
+        },
+        "codeunique": 103075.0,
+        "nom_long": "La Muette",
+        "label": "La Muette",
+        "id_ref_lda": 71229.0,
+        "nom_lda": "La Muette",
+        "id_ref_zdl": 45453.0,
+        "nom_zdl": "Boulainvilliers",
+        "idrefliga": "A01536",
+        "idrefligc": "C01373",
+        "res_com": "METRO 9",
+        "mode": "METRO",
+        "fer": 0.0,
+        "train": 0.0,
+        "rer": 0.0,
+        "metro": 1.0,
+        "tramway": 0.0,
+        "navette": 0.0,
+        "val": 0.0,
+        "terfer": "0",
+        "tertrain": "0",
+        "terrer": "0",
+        "termetro": "0",
+        "tertram": "0",
+        "ternavette": "0",
+        "terval": "0",
+        "exploitant": "RATP",
+        "principal": 0.0,
+        "idf": 1.0,
+        "y": 6862245.855700001,
+        "x": 646744.2366999984
+    },
+    {
+        "geo_point_2d": {
             "lon": 2.4253268915301445,
             "lat": 48.895454672138534
         },
@@ -26600,6 +26647,53 @@
         "idf": 1.0,
         "x": 653205.1423999965,
         "y": 6864458.3475
+    },
+    {
+        "geo_point_2d": {
+            "lon": 2.358047505360746,
+            "lat": 48.87612635202814
+        },
+        "geo_shape": {
+            "type": "Feature",
+            "geometry": {
+                "coordinates": [
+                    2.358047505360746,
+                    48.87612635202814
+                ],
+                "type": "Point"
+            },
+            "properties": {}
+        },
+        "codeunique": 107043.0,
+        "nom_long": "Gare de l'Est",
+        "label": "Gare de l'Est",
+        "id_ref_lda": 71359.0,
+        "nom_lda": "Gare de l'Est",
+        "id_ref_zdl": 43138.0,
+        "nom_zdl": "Gare de l'Est",
+        "idrefliga": "A01537 / A01538 / A01540",
+        "idrefligc": "C01374 / C01375 / C01377",
+        "res_com": "METRO 4 / METRO 5 / METRO 7",
+        "mode": "METRO / TRAIN",
+        "fer": 1.0,
+        "train": 1.0,
+        "rer": 0.0,
+        "metro": 1.0,
+        "tramway": 0.0,
+        "navette": 0.0,
+        "val": 0.0,
+        "terfer": "1",
+        "tertrain": "1",
+        "terrer": "0",
+        "termetro": "0",
+        "tertram": "0",
+        "ternavette": "0",
+        "terval": "0",
+        "exploitant": "RATP",
+        "principal": 0.0,
+        "idf": 1.0,
+        "y": 6864202.935899999,
+        "x": 652915.7135000005
     },
     {
         "geo_point_2d": {

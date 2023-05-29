@@ -2,31 +2,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Station {
-    String station_id;
+    String idfm_station_id;
+    int station_id;
     String name;
     List<Double> coordinates;
-    ArrayList<Ligne> lignes = new ArrayList<>();
+    Ligne ligne;
 
     //Distance and neighbor it's use for Disjkra
     Integer distance = Integer.MAX_VALUE;
-    ArrayList<Edge> neighbor = new ArrayList<>();
+    ArrayList<Edge> neighbors = new ArrayList<>();
 
-    public Station(String station_id, String name, List<Double> coordinates) {
+    public Station(int station_id, String idfm_station_id, String name, List<Double> coordinates) {
         this.station_id = station_id;
+        this.idfm_station_id = idfm_station_id;
         this.name = name;
         this.coordinates = coordinates;
     }
 
-    public Boolean contains(Ligne l){
-        return lignes.contains(l);
+    public ArrayList<Edge> getNeighbors() {
+        return neighbors;
     }
 
-    public ArrayList<Edge> getNeighbor() {
-        return neighbor;
-    }
-
-    public void setNeighbor(Edge edge) {
-        this.neighbor.add(edge);
+    public void setNeighbors(Edge edge) {
+        this.neighbors.add(edge);
     }
 
     public Integer getDistance() {
@@ -37,9 +35,10 @@ public class Station {
         this.distance = distance;
     }
 
-    public String getID() {
-        return station_id;
+    public String getIDFMID() {
+        return idfm_station_id;
     }
+    public int getID() {return station_id;}
 
     public String getName() {
         return this.name;
@@ -57,20 +56,22 @@ public class Station {
         return this.coordinates.get(1);
     }
 
-    public ArrayList<Ligne> getLignes() {
-        return lignes;
+    public Ligne getLigne() {
+        return ligne;
     }
 
-    public void setLignes(Ligne ligne) {
-        this.lignes.add(ligne);
+    public void setLigne(Ligne ligne) {
+        this.ligne = ligne;
     }
 
     @Override
     public String toString() {
-        return "Station_id=" + this.station_id + ", Name=" + this.name + ", Coordinates" + this.coordinates + ", Lines=" + this.lignes;
+        return "Station_id=" + this.idfm_station_id + ", Name=" + this.name + ", Coordinates" + this.coordinates + ", Lines=" + this.ligne;
     }
 
-    public boolean equals(Station otherStation) {
-        return this.getID().equals(otherStation.getID());
+    @Override
+    public boolean equals(Object otherStation) {
+        if (!(otherStation instanceof Station)) return false;
+        return this.getID() == ((Station) otherStation).getID();
     }
 }
