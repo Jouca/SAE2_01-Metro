@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Dijkstra {
     HashMap<Station, Edge> anterior = new HashMap<>();
@@ -102,6 +101,27 @@ public class Dijkstra {
         }
         printSP(previous[v], graphe);
         System.out.print(" ==> " + currentStation.getName() + " (ligne " + currentStation.getLigne().getName() + ")\n");
+    }
+
+    public ArrayList<Station> shortestPathTo(Station station, Graph graphe) {
+        return SP(station.getID(), new ArrayList<>(), graphe);
+    }
+
+    private ArrayList<Station> SP(int stationID, ArrayList<Station> stations, Graph graphe) {
+        if (!hasPathTo(stationID)) {
+            return null;
+        }
+
+        Station currentStation = graphe.getStationByID(stationID);
+
+        if (previous[stationID] == -1) {
+            stations.add(currentStation);
+            return stations;
+        }
+        stations = SP(previous[stationID], stations, graphe);
+        stations.add(currentStation);
+
+        return stations;
     }
 
     private Station nearestNeighbor(Station s) {

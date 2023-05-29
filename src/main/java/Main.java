@@ -7,6 +7,6 @@ public class Main {
         // IDFM:42587 - Chatelet
 
         StationFinder stationFinder = new StationFinder();
-        stationFinder.findBestPath("Porte Maillot", "Porte de Vincennes");
+        stationFinder.findBestPath("Ch\u00e2telet", "Palais Royal - Mus\u00e9e Du Louvre");
     }
 }

@@ -2,6 +2,8 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class StationFinder {
     Graph graphe;
@@ -12,32 +14,49 @@ public class StationFinder {
     }
 
     public void findBestPath(String stationBeginName, String stationArrivalName) {
-        Station beginStation = findStationByName(stationBeginName);
-        Station arrivalStation = findStationByName(stationArrivalName);
+        ArrayList<Station> beginStations = findStationsByName(stationBeginName);
+        ArrayList<Station> arrivalStations = findStationsByName(stationArrivalName);
 
-        if (beginStation == null || arrivalStation == null) {
+        if (beginStations.size() == 0 || arrivalStations.size() == 0) {
             System.out.println("Les noms de station ne sont pas correcte.");
             return;
         }
 
-        Dijkstra dijkstraStations = new Dijkstra(graphe, beginStation);
+        Station minDijkstraStationBegin = null;
+        Station minDijkstraStationArrival = null;
+        Dijkstra minDijkstraPath = null;
+        int minDijkstraTime = Integer.MAX_VALUE;
 
-        for (Station station : stations) {
-            if (station.getID() == arrivalStation.getID()) {
-                System.out.println("\n========= " + station.getName() + " (ligne " + station.getLigne().getName() + ") =========");
-                System.out.println("hasPathTo: " + dijkstraStations.hasPathTo(station.getID()));
-                System.out.println("Temps: " + dijkstraStations.timeTo(station.getID()));
-                dijkstraStations.printSP(station.getID(), graphe);
+        for (Station beginStation : beginStations) {
+            Dijkstra dijkstraStations = new Dijkstra(graphe, beginStation);
+            for (Station arrivalStation : arrivalStations) {
+                if (dijkstraStations.timeTo(arrivalStation.getID()) < minDijkstraTime) {
+                    minDijkstraTime = dijkstraStations.timeTo(arrivalStation.getID());
+                    minDijkstraStationBegin = beginStation;
+                    minDijkstraStationArrival = arrivalStation;
+                    minDijkstraPath = dijkstraStations;
+                }
             }
         }
+
+        System.out.println("\n========= " + minDijkstraStationArrival.getName() + " (ligne " + minDijkstraStationArrival.getLigne().getName() + ") =========");
+        System.out.println("Station Accessible ? : " + minDijkstraPath.hasPathTo(minDijkstraStationArrival.getID()));
+        System.out.println("Temps: " + minDijkstraPath.timeTo(minDijkstraStationArrival.getID()));
+        minDijkstraPath.printSP(minDijkstraStationArrival.getID(), graphe);
+
+        ArrayList<Station> stationsPath = minDijkstraPath.shortestPathTo(minDijkstraStationArrival, graphe);
+       for (Station station : stationsPath) {
+           System.out.println(station.getName());
+       }
     }
 
-    private Station findStationByName(String stationName) {
-        for (Station station : stations) {
+    private ArrayList<Station> findStationsByName(String stationName) {
+        ArrayList<Station> stations = new ArrayList<>();
+        for (Station station : this.stations) {
             if (station.getName().equals(stationName)) {
-                return station;
+                stations.add(station);
             }
         }
-        return null;
+        return stations;
     }
 }
