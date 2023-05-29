@@ -11,7 +11,7 @@ public class Station {
     Integer distance = Integer.MAX_VALUE;
     ArrayList<Edge> neighbor = new ArrayList<>();
 
-    Station(String station_id, String name, List<Double> coordinates) {
+    public Station(String station_id, String name, List<Double> coordinates) {
         this.station_id = station_id;
         this.name = name;
         this.coordinates = coordinates;
@@ -68,5 +68,9 @@ public class Station {
     @Override
     public String toString() {
         return "Station_id=" + this.station_id + ", Name=" + this.name + ", Coordinates" + this.coordinates + ", Lines=" + this.lignes;
+    }
+
+    public boolean equals(Station otherStation) {
+        return this.getID().equals(otherStation.getID());
     }
 }

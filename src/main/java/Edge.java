@@ -1,33 +1,35 @@
-import java.util.ArrayList;
-
 public class Edge {
 
-    ArrayList<Station> parents = new ArrayList<>();
+    Station departureStation;
+    Station arrivalStation;
     Ligne ligne;
-    int weight;
+    int timeWeight;
 
     Edge(Station from_station, Station to_station, int time) {
-        this.parents.add(from_station);
-        this.parents.add(to_station);
-        this.weight = time;
+        this.departureStation = from_station;
+        this.arrivalStation = to_station;
+        this.timeWeight = time;
     }
 
 
-    public int getWeight() {
-        return weight;
+    public int getTimeWeight() {
+        return timeWeight;
     }
 
-
-    public ArrayList<Station> getParents() {
-        return parents;
+    public Station getOtherParent(Station station) {
+        return (station.equals(departureStation)) ? arrivalStation : departureStation;
     }
 
-    public Station getotherParent(Station station) {
-        return (parents.get(0) == station) ? parents.get(1) : parents.get(0);
+    public Station getArrivalStation() {
+        return this.arrivalStation;
+    }
+
+    public Station getDepartureStation() {
+        return this.departureStation;
     }
 
     public Boolean containStation(Station station) {
-        return (parents.contains(station));
+        return station.equals(arrivalStation) || station.equals(departureStation);
     }
 
     public Ligne getLigne() {
@@ -40,6 +42,6 @@ public class Edge {
 
     @Override
     public String toString() {
-        return "Parents=" + this.parents + ", Lines=" + this.ligne + ", Weight=" + this.weight;
+        return "Departure=" + this.departureStation + ", Arrival=" + this.arrivalStation + ", Lines=" + this.ligne + ", Weight=" + this.timeWeight;
     }
 }
