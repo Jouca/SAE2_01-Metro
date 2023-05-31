@@ -19,7 +19,7 @@ public class DatasBuilder {
     public List<JSON_Ligne> data_ligne_const = new ArrayList<>();
     public JSON_Trace_Ligne data_trace_ligne_const = null;
     public List<List<String>> station_csv = new ArrayList<>();
-    public HashMap<String, List> hashMap_station_csv = new HashMap<>();
+    public HashMap<String, List<String> > hashMap_station_csv = new HashMap<>();
     public List<List<String>> relation_csv = new ArrayList<>();
 
 
@@ -62,7 +62,7 @@ public class DatasBuilder {
             }
         }
 
-        for (List list : this.station_csv) {
+        for (List<String> list : this.station_csv) {
             this.hashMap_station_csv.put((String) list.get(0), list);
         }
 

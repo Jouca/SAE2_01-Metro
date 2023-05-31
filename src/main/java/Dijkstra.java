@@ -6,16 +6,7 @@ public class Dijkstra {
     boolean[] marked;
     int[] previous;
     int[] time;
-    private boolean verifyNoNegativeEdges() {
-        for (Station station : this.stations.values()) {
-            for (Edge edge : station.getNeighbors()) {
-                if (edge.getTimeWeight() < 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+
 
     Dijkstra(Graph subwayNetwork, Station begin) {
         int beginStationID = begin.getID();
@@ -76,6 +67,17 @@ public class Dijkstra {
         }
     }
 
+    private boolean verifyNoNegativeEdges() {
+        for (Station station : this.stations.values()) {
+            for (Edge edge : station.getNeighbors()) {
+                if (edge.getTimeWeight() < 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean hasPathTo(int v) {
         // If the node was marked, it should be visited
         // if a node is not visited at the end of the algorithm then there is no path
@@ -124,6 +126,7 @@ public class Dijkstra {
         return stations;
     }
 
+    /*
     private Station nearestNeighbor(Station s) {
         Integer minWeight = Integer.MAX_VALUE;
         Station sommet = null;
@@ -150,15 +153,16 @@ public class Dijkstra {
         Integer mini = Integer.MAX_VALUE;
         Edge temp = null;
         for(Edge i : s1.getNeighbors()) {
-            /*
-            if (i.containStation(s1) && i.containStation(s2) && i.getLigne().equals(anterior.get(s1).getLigne())){
-                temp = i;
-                break;
-            }
-            else if(i.containStation(s1) && i.containStation(s2) && i.getWeight() < mini) {
-                mini = i.getWeight();
-                temp = i;
-            }*/
+
+            //if (i.containStation(s1) && i.containStation(s2) && i.getLigne().equals(anterior.get(s1).getLigne())){
+            //    temp = i;
+            //    break;
+            //}
+            //else if(i.containStation(s1) && i.containStation(s2) && i.getWeight() < mini) {
+            //    mini = i.getWeight();
+            //    temp = i;
+            //}
+            
             if (i.containStation(s1) && i.containStation(s2)) {
                 mini = i.getTimeWeight();
                 temp = i;
@@ -166,4 +170,5 @@ public class Dijkstra {
         }
         return temp;
     }
+    */
 }

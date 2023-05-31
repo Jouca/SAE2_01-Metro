@@ -2,8 +2,6 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class StationFinder {
     Graph graphe;
@@ -22,7 +20,7 @@ public class StationFinder {
             return;
         }
 
-        Station minDijkstraStationBegin = null;
+        //Station minDijkstraStationBegin = null;
         Station minDijkstraStationArrival = null;
         Dijkstra minDijkstraPath = null;
         int minDijkstraTime = Integer.MAX_VALUE;
@@ -32,7 +30,7 @@ public class StationFinder {
             for (Station arrivalStation : arrivalStations) {
                 if (dijkstraStations.timeTo(arrivalStation.getID()) < minDijkstraTime) {
                     minDijkstraTime = dijkstraStations.timeTo(arrivalStation.getID());
-                    minDijkstraStationBegin = beginStation;
+                    //minDijkstraStationBegin = beginStation;
                     minDijkstraStationArrival = arrivalStation;
                     minDijkstraPath = dijkstraStations;
                 }
@@ -44,10 +42,10 @@ public class StationFinder {
         System.out.println("Temps: " + minDijkstraPath.timeTo(minDijkstraStationArrival.getID()));
         minDijkstraPath.printSP(minDijkstraStationArrival.getID(), graphe);
 
-        ArrayList<Station> stationsPath = minDijkstraPath.shortestPathTo(minDijkstraStationArrival, graphe);
-       for (Station station : stationsPath) {
-           System.out.println(station.getName());
-       }
+        //ArrayList<Station> stationsPath = minDijkstraPath.shortestPathTo(minDijkstraStationArrival, graphe);
+        //for (Station station : stationsPath) {
+        //   System.out.println(station.getName());
+        //}
     }
 
     private ArrayList<Station> findStationsByName(String stationName) {

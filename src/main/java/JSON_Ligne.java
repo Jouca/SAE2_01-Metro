@@ -1,7 +1,3 @@
-import com.google.gson.JsonObject;
-
-import java.util.List;
-
 class JSON_Ligne {
     String id_line;
     String name_line;

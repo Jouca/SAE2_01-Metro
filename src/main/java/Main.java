@@ -7,6 +7,6 @@ public class Main {
         // IDFM:42587 - Chatelet
 
         StationFinder stationFinder = new StationFinder();
-        stationFinder.findBestPath("Ch\u00e2telet", "Palais Royal - Mus\u00e9e Du Louvre");
+        stationFinder.findBestPath("Ch\u00e2telet", "Villejuif L\u00e9o Lagrange");
     }
 }
