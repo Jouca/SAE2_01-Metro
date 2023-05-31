@@ -96,9 +96,9 @@ public class StationFinder {
 
         String etape = "";
         for(int i =1; i<stations.size() -1; i++){
-            etape+= stations.get(i);
+            etape+= " " +stations.get(i);
         }
-        System.out.println("\n========= "+ stations.get(0) + " vers " + stations.get(stations.size() -1) + " en passant par " + etape + " =========");
+        System.out.println("\n========= "+ stations.get(0) + " vers " + stations.get(stations.size() -1) + " en passant par" + etape + " =========");
         for(Station s : path){
             System.out.print(" ==> " + s.getName() + " (ligne " + s.getLigne().getName() + ")\n");
         }
