@@ -42,7 +42,3 @@ blablablabla
 - Github:
     - [Lilian Duchanois](https://github.com/L3ChatNoir)
     - [Diego Roulle](https://github.com/Jouca)
-
-- Mails: 
-    - >lilian.duchanois@etu.u-pec.fr
-    - >diego.roulle@etu.u-pec.fr
