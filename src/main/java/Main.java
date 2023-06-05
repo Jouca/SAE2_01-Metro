@@ -9,7 +9,7 @@ public class Main {
         // IDFM:42587 - Chatelet
 
         StationFinder stationFinder = new StationFinder();
-        stationFinder.findBestPath("Ch\u00e2telet", "Villejuif L\u00e9o Lagrange");
+        //stationFinder.findBestPath("Ch\u00e2telet", "Villejuif L\u00e9o Lagrange");
 
         stationFinder.printfindBestPath(new ArrayList<String>(Arrays.asList( "Ch\u00e2telet", "Villejuif Louis Aragon","Bastille", "Gare de l'Est")));
     }

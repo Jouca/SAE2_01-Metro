@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Graph {
+    //Find station by name easly
     HashMap<String, Station> stations = new HashMap<>();
+
     ArrayList<Station> stationsList = new ArrayList<>();
     HashMap<String, Ligne> lignes = new HashMap<>();
     ArrayList<Edge> edges = new ArrayList<>();
@@ -170,5 +172,17 @@ public class Graph {
 
     public String stationligne(Ligne l) {
         return l.toString();
+    }
+
+    public HashSet<Station> correspondancelignes(Ligne l1, Ligne l2) {
+        HashSet<Station> cor = new HashSet<Station>();
+
+        for(Station s : l1.getStations()) {
+            if(s.getLigne() == l2){
+                cor.add(s);
+            }
+        }
+
+        return cor;        
     }
 }
