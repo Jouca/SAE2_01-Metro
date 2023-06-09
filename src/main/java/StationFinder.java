@@ -8,7 +8,6 @@ public class StationFinder {
     ArrayList<Station> stations;
     StationFinder() throws IOException, CsvValidationException {
         this.graphe = new Graph();
-        this.stations = graphe.getStationsList();
     }
 
     public void findBestPath(String stationBeginName, String stationArrivalName) {
@@ -20,7 +19,6 @@ public class StationFinder {
             return;
         }
 
-        //Station minDijkstraStationBegin = null;
         Station minDijkstraStationArrival = null;
         Dijkstra minDijkstraPath = null;
         int minDijkstraTime = Integer.MAX_VALUE;
@@ -41,16 +39,11 @@ public class StationFinder {
         System.out.println("Station Accessible ? : " + minDijkstraPath.hasPathTo(minDijkstraStationArrival.getID()));
         System.out.println("Temps: " + minDijkstraPath.timeTo(minDijkstraStationArrival.getID()));
         minDijkstraPath.printSP(minDijkstraStationArrival.getID(), graphe);
-
-        //ArrayList<Station> stationsPath = minDijkstraPath.shortestPathTo(minDijkstraStationArrival, graphe);
-        //for (Station station : stationsPath) {
-        //   System.out.println(station.getName());
-        //}
     }
 
     private ArrayList<Station> findStationsByName(String stationName) {
         ArrayList<Station> stations = new ArrayList<>();
-        for (Station station : this.stations) {
+        for (Station station : graphe.getStationsList()) {
             if (station.getName().equals(stationName)) {
                 stations.add(station);
             }
