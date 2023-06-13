@@ -120,13 +120,6 @@ public class Graph {
     }
 
     private static Station convertLineType(JSON_Station station, int station_id) {
-        /*Station formatted_station = null;
-
-        if (station.train == 1 || station.rer == 1) {
-            formatted_station = new Station(station_id, "IDFM:monomodalStopPlace:" + (int) station.id_ref_lda, station.nom_long, station.geo_shape.geometry.coordinates);
-        } else {
-            formatted_station = new Station(station_id,"IDFM:" + (int) station.id_ref_zdl, station.nom_long, station.geo_shape.geometry.coordinates);
-        }*/
         Station formatted_station = new Station(station_id,"IDFM:" + (int) station.id_ref_zdl, station.nom_zdl, station.geo_shape.geometry.coordinates);
 
         return formatted_station;
@@ -176,13 +169,7 @@ public class Graph {
 
     public HashSet<Station> correspondancelignes(Ligne l1, Ligne l2) {
         HashSet<Station> cor = new HashSet<Station>();
-
-        for(Station s : l1.getStations()) {
-            if(s.getLigne() == l2){
-                cor.add(s);
-            }
-        }
-
+        // Crée algo, donnant les correspondances entre 2 lignes
         return cor;        
     }
 }

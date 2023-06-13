@@ -44,11 +44,6 @@ public class DatasBuilder {
         Gson gson_trace_ligne = new Gson();
         JsonReader reader_trace_ligne = new JsonReader(new FileReader("data/traces-du-reseau-ferre-idf.geojson"));
         this.data_trace_ligne_const = gson_trace_ligne.fromJson(reader_trace_ligne, JSON_TRACE_LIGNE_TYPE);
-        /*for (Feature feature : data_trace_ligne_const.features) {
-            for (List<Double> geometry : feature.geometry.coordinates) {
-                System.out.println(geometry);
-            }
-        }*/
 
         // Test Stations CSV
         try (CSVReader csvReader = new CSVReaderBuilder(new FileReader("data/stations.csv"))

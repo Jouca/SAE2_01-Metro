@@ -5,40 +5,8 @@ import java.util.ArrayList;
 
 public class StationFinder {
     Graph graphe;
-    ArrayList<Station> stations;
     StationFinder() throws IOException, CsvValidationException {
         this.graphe = new Graph();
-    }
-
-    public void findBestPath(String stationBeginName, String stationArrivalName) {
-        ArrayList<Station> beginStations = findStationsByName(stationBeginName);
-        ArrayList<Station> arrivalStations = findStationsByName(stationArrivalName);
-
-        if (beginStations.size() == 0 || arrivalStations.size() == 0) {
-            System.out.println("Les noms de station ne sont pas correcte.");
-            return;
-        }
-
-        Station minDijkstraStationArrival = null;
-        Dijkstra minDijkstraPath = null;
-        int minDijkstraTime = Integer.MAX_VALUE;
-
-        for (Station beginStation : beginStations) {
-            Dijkstra dijkstraStations = new Dijkstra(graphe, beginStation);
-            for (Station arrivalStation : arrivalStations) {
-                if (dijkstraStations.timeTo(arrivalStation.getID()) < minDijkstraTime) {
-                    minDijkstraTime = dijkstraStations.timeTo(arrivalStation.getID());
-                    //minDijkstraStationBegin = beginStation;
-                    minDijkstraStationArrival = arrivalStation;
-                    minDijkstraPath = dijkstraStations;
-                }
-            }
-        }
-
-        System.out.println("\n========= " + minDijkstraStationArrival.getName() + " (ligne " + minDijkstraStationArrival.getLigne().getName() + ") =========");
-        System.out.println("Station Accessible ? : " + minDijkstraPath.hasPathTo(minDijkstraStationArrival.getID()));
-        System.out.println("Temps: " + minDijkstraPath.timeTo(minDijkstraStationArrival.getID()));
-        minDijkstraPath.printSP(minDijkstraStationArrival.getID(), graphe);
     }
 
     private ArrayList<Station> findStationsByName(String stationName) {
