@@ -64,4 +64,8 @@ public class StationFinder {
             System.out.print(" ==> " + s.getName() + " (ligne " + s.getLigne().getName() + ")\n");
         }
     }
+
+    public void prim() {
+        this.graphe.primcleaner();
+    }
 }

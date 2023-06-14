@@ -2,7 +2,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
 import java.util.*;
-
+ 
 public class Graph {
     //Find station by name easly
     HashMap<String, Station> stations = new HashMap<>();
@@ -110,6 +110,16 @@ public class Graph {
         return neighbors;
     }
 
+    public ArrayList<Edge> getNeighbors(Station station) {
+        ArrayList<Edge> neighbors = new ArrayList<>();
+        for (Edge edge : this.edges) {
+            if (edge.containStation(station)) {
+                neighbors.add(edge);
+            }
+        }
+        return neighbors;
+    }
+
     public Station getStationByID(int station_id) {
         for (Station station : this.stationsList) {
             if (station.getID() == station_id) {
@@ -117,6 +127,11 @@ public class Graph {
             }
         }
         return null;
+    }
+    
+
+    public HashMap<String, Station> getStations() {
+        return this.stations;
     }
 
     private static Station convertLineType(JSON_Station station, int station_id) {
@@ -171,5 +186,37 @@ public class Graph {
         HashSet<Station> cor = new HashSet<Station>();
         // Crée algo, donnant les correspondances entre 2 lignes
         return cor;        
+    }
+
+    public ArrayList<Station> findStationsByName(String stationName) {
+        ArrayList<Station> stations = new ArrayList<>();
+        for (Station station : this.stationsList) {
+            if (station.getName().equals(stationName)) {
+                stations.add(station);
+            }
+        }
+        return stations;
+    }
+
+    public void primcleaner() {
+        Prim prim = new Prim(this);
+        for(Edge e : this.edges) {
+            if(prim.getEdges().contains(e)) {
+                //Remove edge from station
+                e.getArrivalStation().getNeighbors().remove(e);
+                e.getDepartureStation().getNeighbors().remove(e);
+
+                //Remove edge from arraylist of edges
+                this.edges.remove(e);
+
+                //Remove Stations
+                this.stations.remove(e.getArrivalStation().getName(), e);
+                this.stations.remove(e.getDepartureStation().getName(), e);
+                e.getArrivalStation().getLigne().stations.remove(e.getArrivalStation());
+                e.getDepartureStation().getLigne().stations.remove(e.getDepartureStation());
+                this.stationsList.remove(e.getArrivalStation());
+                this.stationsList.remove(e.getArrivalStation());
+            }
+        }
     }
 }
