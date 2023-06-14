@@ -201,7 +201,7 @@ public class Graph {
     public void primcleaner() {
         Prim prim = new Prim(this);
         for(Edge e : this.edges) {
-            if(prim.getEdges().contains(e)) {
+            if(!prim.getEdges().contains(e)) {
                 //Remove edge from station
                 e.getArrivalStation().getNeighbors().remove(e);
                 e.getDepartureStation().getNeighbors().remove(e);
