@@ -24,7 +24,7 @@ public class Prim {
             for(String n : selected_nodes) {
                 for(Station s : graph.findStationsByName(n)) {
                     for(Edge e : graph.getNeighbors(s)){
-                        if((e.getTimeWeight() < nextedge.getTimeWeight()) && (!selected_nodes.contains(e.getOtherParent(s)))) {
+                        if((e.getTimeWeight() < nextedge.getTimeWeight()) && (!selected_nodes.contains(e.getOtherParent(s).getName()))) {
                             nextedge = e;
                         }
                     }
