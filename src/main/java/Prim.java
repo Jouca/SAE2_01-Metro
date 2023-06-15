@@ -15,15 +15,16 @@ public class Prim {
         ArrayList<Edge> edges = new ArrayList<Edge>();
 
         //prend une première station
-        selected_nodes.add(this.graph.getStations().keySet().iterator().next());
+        selected_nodes.add(this.graph.getStationsList().get(0).getName());
 
         //tant qu'on n'a pas pris chaque station
+        
         while(selected_nodes.size() != graph.getStations().size()) {
             Edge nextedge = new Edge(null, null, Integer.MAX_VALUE);
-
             for(String n : selected_nodes) {
                 for(Station s : graph.findStationsByName(n)) {
                     for(Edge e : graph.getNeighbors(s)){
+
                         if((e.getTimeWeight() < nextedge.getTimeWeight()) && (!selected_nodes.contains(e.getOtherParent(s).getName()))) {
                             nextedge = e;
                         }
@@ -31,16 +32,15 @@ public class Prim {
                 }
             }
             try{
-                edges.add(nextedge);
                 selected_nodes.add(nextedge.getArrivalStation().getName());
                 selected_nodes.add(nextedge.getDepartureStation().getName());
+                edges.add(nextedge);
             }
             catch(Exception e) {
-                System.out.println("ERROR");
+                System.out.println("DIEGO REGLE TON PUTAIN DE DOUBLONS DANS Graph.stations");
                 return edges;
             }
         }
-
         return edges;
     }
 

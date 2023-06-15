@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.*;
  
 public class Graph {
-    //Find station by name easly
+    //Find station by ID IDFM easly TA M7RE DIEGO
     HashMap<String, Station> stations = new HashMap<>();
 
     ArrayList<Station> stationsList = new ArrayList<>();
@@ -197,10 +197,11 @@ public class Graph {
         }
         return stations;
     }
-
+    /* 
     public void primcleaner() {
         Prim prim = new Prim(this);
-        for(Edge e : this.edges) {
+        for(int i =0; i < this.edges.size(); i++) {
+            Edge e = this.edges.get(i);
             if(!prim.getEdges().contains(e)) {
                 //Remove edge from station
                 e.getArrivalStation().getNeighbors().remove(e);
@@ -212,11 +213,27 @@ public class Graph {
                 //Remove Stations
                 this.stations.remove(e.getArrivalStation().getName(), e);
                 this.stations.remove(e.getDepartureStation().getName(), e);
-                e.getArrivalStation().getLigne().stations.remove(e.getArrivalStation());
-                e.getDepartureStation().getLigne().stations.remove(e.getDepartureStation());
+                try {
+                    e.getArrivalStation().getLigne().stations.remove(e.getArrivalStation());
+                    e.getDepartureStation().getLigne().stations.remove(e.getDepartureStation());
+                } catch(NullPointerException error) {}
+                
                 this.stationsList.remove(e.getArrivalStation());
                 this.stationsList.remove(e.getArrivalStation());
+                i--;
             }
         }
+    }
+    */
+    public void primcleaner() {
+        Prim prim = new Prim(this);
+
+        this.edges = prim.getEdges();
+        HashSet<Station> stations = new HashSet<Station>();
+        for(Edge i : prim.getEdges()){
+            stations.add(i.getArrivalStation());
+            stations.add(i.getDepartureStation());
+        }
+        this.stationsList = new ArrayList<Station>(stations);
     }
 }

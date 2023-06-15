@@ -21,11 +21,9 @@ public class StationFinder {
 
     public ArrayList<Station> findBestPath(ArrayList<String> stations){
         ArrayList<Station> path = new ArrayList<Station>();
-
         for(int i=0; i < stations.size()-1; i++){
-            ArrayList<Station> beginStations =  findStationsByName(stations.get(i));
-            ArrayList<Station> arrivalStations = findStationsByName(stations.get(i+1));
-
+            ArrayList<Station> beginStations =  this.graphe.findStationsByName(stations.get(i));
+            ArrayList<Station> arrivalStations = this.graphe.findStationsByName(stations.get(i+1));
             if (beginStations.size() == 0 || arrivalStations.size() == 0) {
                 return null;
             }
@@ -54,7 +52,6 @@ public class StationFinder {
 
     public void printfindBestPath(ArrayList<String> stations){
         ArrayList<Station> path = this.findBestPath(stations);
-
         String etape = "";
         for(int i =1; i<stations.size() -1; i++){
             etape+= " " +stations.get(i);

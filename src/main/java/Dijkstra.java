@@ -3,7 +3,7 @@ import java.util.*;
 public class Dijkstra {
     HashMap<Station, Edge> anterior = new HashMap<>();
     HashMap<String, Station> stations = new HashMap<>();
-    boolean[] marked;
+    boolean[] marked; 
     int[] previous;
     int[] time;
 
@@ -41,7 +41,7 @@ public class Dijkstra {
                 }
             }
 
-            // We add the current node to the list of the visited node
+            // We add the current node to the list of the visited node 
             marked[currentNode] = true;
 
             // We now look at all the neighbours of the current nodes
