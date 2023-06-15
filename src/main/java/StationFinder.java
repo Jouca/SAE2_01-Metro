@@ -65,4 +65,47 @@ public class StationFinder {
     public void prim() {
         this.graphe.primcleaner();
     }
+
+      public ArrayList<Station> findBestPath2(ArrayList<String> stations){
+        ArrayList<Station> path = new ArrayList<Station>();
+        for(int i=0; i < stations.size()-1; i++){
+            ArrayList<Station> beginStations =  this.graphe.findStationsByName(stations.get(i));
+            ArrayList<Station> arrivalStations = this.graphe.findStationsByName(stations.get(i+1));
+            if (beginStations.size() == 0 || arrivalStations.size() == 0) {
+                return null;
+            }
+    
+            Station minDijkstraStationArrival = null;
+            Dijkstra2 minDijkstraPath = null;
+            int minDijkstraTime = Integer.MAX_VALUE;
+    
+            for (Station beginStation : beginStations) {
+                Dijkstra2 dijkstraStations = new Dijkstra2(graphe, beginStation);
+                for (Station arrivalStation : arrivalStations) {
+                    if (dijkstraStations.timeTo(arrivalStation.getID()) < minDijkstraTime) {
+                        minDijkstraTime = dijkstraStations.timeTo(arrivalStation.getID());
+                        minDijkstraStationArrival = arrivalStation;
+                        minDijkstraPath = dijkstraStations;
+                    }
+                }
+            }
+            for(Station s : minDijkstraPath.shortestPathTo(minDijkstraStationArrival)){
+                path.add(s);
+            }
+        }
+
+        return path;
+    }
+
+    public void printfindBestPath2(ArrayList<String> stations){
+        ArrayList<Station> path = this.findBestPath2(stations);
+        String etape = "";
+        for(int i =1; i<stations.size() -1; i++){
+            etape+= " " +stations.get(i);
+        }
+        System.out.println("\n========= "+ stations.get(0) + " vers " + stations.get(stations.size() -1) + " en passant par" + etape + " =========");
+        for(Station s : path){
+            System.out.print(" ==> " + s.getName() + " (ligne " + s.getLigne().getName() + ")\n");
+        }
+    }
 }

@@ -66,7 +66,7 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Station_id=" + this.idfm_station_id + ", Name=" + this.name + ", Coordinates" + this.coordinates + ", Lines=" + this.ligne;
+        return "intID=" + this.station_id+ " ,Station_id=" + this.idfm_station_id + ", Name=" + this.name + ", Coordinates" + this.coordinates + ", Lines=" + this.ligne;
     }
 
     @Override

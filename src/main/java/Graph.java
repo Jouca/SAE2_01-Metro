@@ -74,7 +74,7 @@ public class Graph {
     private Station addingNeighbors(Station formatted_station, JSON_Station station, int i) {
         for (int j = 1; j < this.datas.relation_csv.size(); j++) {
             // Regarde si l'ID de la ligne correspond à celui dans relation
-            if (this.datas.relation_csv.get(j).get(0).equals(this.datas.station_csv.get(i).get(0)) || this.datas.relation_csv.get(j).get(1).equals(this.datas.station_csv.get(i).get(0))) {
+            if (this.datas.relation_csv.get(j).get(0).equals(this.datas.station_csv.get(i).get(0))) {
                 String id_other = getCorrectRelationID(i, j);
 
                 // Regarde si l'ID de la ligne a une relation avec une autre ligne
@@ -150,7 +150,7 @@ public class Graph {
 
     private Edge insertLinesToEdge(Edge new_edge, String id_other) {
         for (JSON_Ligne ligne : this.datas.data_ligne_const) {
-            if (this.datas.station_csv.get(Integer.parseInt(id_other)).get(1).equals(ligne.name_line.toLowerCase())) {
+            if (this.datas.hashMap_station_csv.get(id_other).get(1).equals(ligne.name_line.toLowerCase())) {
                 new_edge.setLigne(
                         new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
                 );
@@ -163,7 +163,7 @@ public class Graph {
 
     private Station insertLinesToOtherStation(Station other_formatted_station, String id_other) {
         for (JSON_Ligne ligne : this.datas.data_ligne_const) {
-            if (this.datas.station_csv.get(Integer.parseInt(id_other)).get(1).equals(ligne.name_line.toLowerCase())) {
+            if (this.datas.hashMap_station_csv.get(id_other).get(1).equals(ligne.name_line.toLowerCase())) {
                 other_formatted_station.setLigne(
                         new Ligne(ligne.id_line, ligne.transportmode, ligne.name_line)
                 );
@@ -231,9 +231,17 @@ public class Graph {
         this.edges = prim.getEdges();
         HashSet<Station> stations = new HashSet<Station>();
         for(Edge i : prim.getEdges()){
-            stations.add(i.getArrivalStation());
+            stations.add(i.getArrivalStation()); 
             stations.add(i.getDepartureStation());
         }
         this.stationsList = new ArrayList<Station>(stations);
+        
+        /*for (Station st : this.stationsList) {
+            for (Station st2 : this.stationsList) {
+                if (st.getName().equals(st2.getName())) {
+                    System.out.println(st);
+                }
+            }
+        }*/
     }
 }

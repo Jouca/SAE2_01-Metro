@@ -1,14 +1,15 @@
 import java.util.*;
 
 public class Dijkstra {
+    Graph graph;
     HashMap<Station, Edge> anterior = new HashMap<>();
-    HashMap<String, Station> stations = new HashMap<>();
     boolean[] marked; 
     int[] previous;
     int[] time;
 
 
     Dijkstra(Graph subwayNetwork, Station begin) {
+        this.graph = subwayNetwork;
         int beginStationID = begin.getID();
 
         // Vérifie si aucun des temps est en négatif dans les arrêtes
@@ -26,7 +27,7 @@ public class Dijkstra {
             time[i] = (i == beginStationID) ? 0 : Integer.MAX_VALUE;
             previous[i] = -1;
         }
-
+        
         boolean allVisitedStations = false;
 
         // Regarde si toutes les stations ont été vérifié
@@ -68,7 +69,7 @@ public class Dijkstra {
     }
 
     private boolean verifyNoNegativeEdges() {
-        for (Station station : this.stations.values()) {
+        for (Station station : this.graph.getStationsList()) {
             for (Edge edge : station.getNeighbors()) {
                 if (edge.getTimeWeight() < 0) {
                     return false;

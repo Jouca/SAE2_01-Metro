@@ -10,7 +10,7 @@ public class Prim {
         this.edges = prim();
     }
 
-       public ArrayList<Edge> prim() {
+    public ArrayList<Edge> prim() {
         HashSet<String> selected_nodes = new HashSet<String>();
         ArrayList<Edge> edges = new ArrayList<Edge>();
 
@@ -31,13 +31,14 @@ public class Prim {
                     }
                 }
             }
-            try{
+            try {
                 selected_nodes.add(nextedge.getArrivalStation().getName());
                 selected_nodes.add(nextedge.getDepartureStation().getName());
                 edges.add(nextedge);
             }
             catch(Exception e) {
-                System.out.println("DIEGO REGLE TON PUTAIN DE DOUBLONS DANS Graph.stations");
+                System.out.println("DOUBLONS DANS Graph.stations");
+                System.out.println(selected_nodes.size());
                 return edges;
             }
         }
@@ -45,7 +46,7 @@ public class Prim {
     }
 
     public ArrayList<Edge> getEdges() {
-        return edges;
+        return this.edges;
     }
 
     
