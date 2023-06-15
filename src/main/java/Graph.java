@@ -70,11 +70,11 @@ public class Graph {
             }
         }
     }
-
+ 
     private Station addingNeighbors(Station formatted_station, JSON_Station station, int i) {
         for (int j = 1; j < this.datas.relation_csv.size(); j++) {
             // Regarde si l'ID de la ligne correspond à celui dans relation
-            if (this.datas.relation_csv.get(j).get(0).equals(this.datas.station_csv.get(i).get(0))) {
+            if (this.datas.relation_csv.get(j).get(0).equals(this.datas.station_csv.get(i).get(0)) || this.datas.relation_csv.get(j).get(1).equals(this.datas.station_csv.get(i).get(0))) {
                 String id_other = getCorrectRelationID(i, j);
 
                 // Regarde si l'ID de la ligne a une relation avec une autre ligne
@@ -235,13 +235,19 @@ public class Graph {
             stations.add(i.getDepartureStation());
         }
         this.stationsList = new ArrayList<Station>(stations);
-        
-        /*for (Station st : this.stationsList) {
-            for (Station st2 : this.stationsList) {
-                if (st.getName().equals(st2.getName())) {
-                    System.out.println(st);
-                }
-            }
-        }*/
     }
+
+    public void test() {
+        System.out.println(this.stationsList.size());
+
+        HashSet<Station> stations = new HashSet<Station>();
+        for(Station s : this.stationsList){
+            for(Edge i: s.getNeighbors()){
+                stations.add(i.getArrivalStation()); 
+                stations.add(i.getDepartureStation());
+            }
+        }
+
+        System.out.println(stations.size());
+        }
 }

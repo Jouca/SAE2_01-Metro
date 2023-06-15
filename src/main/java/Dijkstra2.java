@@ -16,8 +16,6 @@ public class Dijkstra2 {
         this.weight = new ArrayList<Integer>();
         this.previous = new ArrayList<Integer>();
 
-        System.out.println(graph.getStationsList().size());
-
         for(Station s: graph.getStationsList()){
             weight.add(Integer.MAX_VALUE);
             previous.add(null);

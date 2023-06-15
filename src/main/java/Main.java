@@ -10,8 +10,7 @@ public class Main {
 
         StationFinder stationFinder = new StationFinder();
         //stationFinder.prim();
-        stationFinder.printfindBestPath2(new ArrayList<String>(Arrays.asList( "Ch\u00e2telet", "Villejuif Louis Aragon","Bastille", "Gare de l'Est")));
-
-        
+        stationFinder.graphe.test();
+        stationFinder.printfindBestPath(new ArrayList<String>(Arrays.asList( "Ch\u00e2telet", "Villejuif Louis Aragon","Bastille", "Gare de l'Est")));
     }
 }
