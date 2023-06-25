@@ -12,30 +12,25 @@ This is a descriptions to change when we have idea (1 ligne / phrase d'accroche)
 
 ## What is this ?
 
-long descriptions
+Algorithme use for SAE 201 and android application to search best path station by station with Paris metro
 
 ## Features 
 
-- 1 features
-- 2 features
-- 3 features
-- 4 features
-- 5 features
+- Best path with Dijksra
+- Minimal covering tree with Prim
 
 ## Prerequisites
 
-- pre
-- re
-- qui
-- sites
+- Java
+- Maven
 
 ## Installation
 
-blablablabla
+Just download source code
 
 ## Usage
 
- How to use
+You can use main to do some test and execute it
 
 ### Contact
 
