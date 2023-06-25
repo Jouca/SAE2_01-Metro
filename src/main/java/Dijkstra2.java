@@ -5,6 +5,8 @@ public class Dijkstra2 {
     ArrayList<Station> selected_nodes;
     ArrayList<Integer> weight;
     ArrayList<Integer> previous;
+
+    
     Dijkstra2(Graph graph, Station begin) {
         this.graph = graph;
         if(!verifyNoNegativeEdges()){
