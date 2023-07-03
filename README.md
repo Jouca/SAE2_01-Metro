@@ -35,5 +35,5 @@ You can use main to do some test and execute it
 ### Contact
 
 - Github:
-    - [Lilian Duchanois](https://github.com/L3ChatNoir)
+    - [L3ChatNoir](https://github.com/L3ChatNoir)
     - [Diego Roulle](https://github.com/Jouca)
